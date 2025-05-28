@@ -2,7 +2,7 @@ from django.shortcuts import render
 from markdown2 import markdown
 from . import util
 from django.http import HttpResponse
-
+import random
 
 
 def index(request):
@@ -67,3 +67,7 @@ def edit_page(request, title):
         "content": content
     })
        
+def random_page(request):
+    random_title = random.choice(util.list_entries())
+    content = util.get_entry(random_title)
+    return show_entry(request, random_title, content)
