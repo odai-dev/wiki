@@ -36,3 +36,11 @@ textarea {
 .sidebar h2 {
     margin-top: 5px;
 }
+@media screen and (max-width: 768px){
+    .sidebar {
+        height: auto;
+    }
+    .main {
+        margin-left: 10px;
+    }
+}
