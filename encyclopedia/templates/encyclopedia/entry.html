@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block body %}
+<div class="mb-3">
+    <a href="{% url 'edit' title  %}"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
+</div> 
     {{content | safe}}
 {% endblock %}
 

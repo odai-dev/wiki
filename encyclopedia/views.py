@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from markdown import markdown
+from markdown2 import markdown
 from . import util
 from django.http import HttpResponse
 
@@ -43,14 +43,27 @@ def show_entry(request, title,content):
 def new_entry(request):
     if request.method == "POST":
         title = request.POST.get("title").strip()
-        content = request.POST.get("text")
+        content = request.POST.get("content")
         if title in util.list_entries():
             return HttpResponse('<h3 style="color:red;">ERROR: Entry title already exist</h3>')
         print(content)
         util.save_entry(title, content)
-        return  show_entry(request, title, content)
+        return show_entry(request, title, content)
     
     return render(request, "encyclopedia/new_entry.html")
 
+def edit_page(request, title):
+    if request.method == "POST":
+        title = request.POST.get("title").strip()
+        content = request.POST.get("content")
+        if not content:
+            return HttpResponse('<h3 style="color:red;">ERROR: Entry content missing</h3>')
+        util.save_entry(title, content)
+        return show_entry(request, title, content)
 
+    content = util.get_entry(title)
+    return render(request, "encyclopedia/edit.html",{
+        "title": title,
+        "content": content
+    })
        
